@@ -6,8 +6,11 @@ import (
 	"encoding/base64"
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
+	jwtmiddleware "github.com/auth0/go-jwt-middleware/v2"
+	"github.com/auth0/go-jwt-middleware/v2/validator"
 	"github.com/mailgun/mailgun-go/v4"
 )
 
@@ -81,4 +84,13 @@ func sendTokenByMail(email, token string) error {
 
 	fmt.Printf("mail was sent. ID: %s Resp: %s\n", id, resp)
 	return nil
+}
+
+func getDiscordIDFromContext(ctx context.Context) string {
+	c := ctx.Value(jwtmiddleware.ContextKey{}).(*validator.ValidatedClaims)
+	return strings.Split(c.RegisteredClaims.Subject, "|")[2]
+}
+
+func authorizeDiscordID(ctx context.Context, discordID string) bool {
+	return getDiscordIDFromContext(ctx) == discordID
 }

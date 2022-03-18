@@ -6,6 +6,9 @@ require (
 	entgo.io/contrib v0.2.0
 	entgo.io/ent v0.10.1
 	github.com/99designs/gqlgen v0.17.1
+	github.com/MakeNowJust/heredoc/v2 v2.0.1
+	github.com/auth0/go-jwt-middleware/v2 v2.0.0
+	github.com/bwmarrin/discordgo v0.24.0
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/joho/godotenv v1.4.0
 	github.com/lib/pq v1.10.4
@@ -13,7 +16,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.10
 	github.com/vektah/gqlparser/v2 v2.4.0
 	github.com/vmihailenco/msgpack/v5 v5.3.5
-	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5
+	golang.org/x/crypto v0.0.0-20220112180741-5e0467b6c7ce
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
 )
 
@@ -36,7 +39,7 @@ require (
 	github.com/mitchellh/mapstructure v1.4.3 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
-	github.com/pkg/errors v0.8.1 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	github.com/zclconf/go-cty v1.8.0 // indirect
 	golang.org/x/mod v0.5.1 // indirect
@@ -44,5 +47,6 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/tools v0.1.9 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
+	gopkg.in/square/go-jose.v2 v2.6.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )

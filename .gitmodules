@@ -1,0 +1,3 @@
+[submodule "graph/schemas"]
+	path = graph/schemas
+	url = https://github.com/ymsg19/sfc-guardbot-schemas.git

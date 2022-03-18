@@ -13,7 +13,7 @@ import (
 func main() {
 	ex, err := entgql.NewExtension(
 		entgql.WithWhereFilters(true),
-		entgql.WithSchemaPath("./graph/ent.graphql"),
+		entgql.WithSchemaPath("./graph/schemas/ent.graphql"),
 		entgql.WithConfigPath("./gqlgen.yml"),
 	)
 

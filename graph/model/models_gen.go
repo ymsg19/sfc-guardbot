@@ -3,11 +3,14 @@
 package model
 
 type MemberInput struct {
-	DiscordUID string `json:"discord_uid"`
-	Email      string `json:"email"`
+	Email string `json:"email"`
 }
 
 type MemberVerificationInput struct {
 	ID                int    `json:"id"`
 	VerificationToken string `json:"verification_token"`
+}
+
+type VerificationResult struct {
+	InviteCode string `json:"invite_code"`
 }

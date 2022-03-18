@@ -7,9 +7,11 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/ymsg19/sfc-guardbot/bot"
 	"github.com/ymsg19/sfc-guardbot/ent"
 	"github.com/ymsg19/sfc-guardbot/ent/migrate"
 	"github.com/ymsg19/sfc-guardbot/graph"
+	"github.com/ymsg19/sfc-guardbot/middleware"
 
 	"entgo.io/contrib/entgql"
 	"entgo.io/ent/dialect"
@@ -40,8 +42,7 @@ func main() {
 	}
 
 	if env == ENV_DEVELOPMENT {
-		err := godotenv.Load()
-		if err != nil {
+		if err := godotenv.Load(); err != nil {
 			log.Fatal("Error loading .env file")
 		}
 	}
@@ -70,11 +71,21 @@ func main() {
 		log.Fatal("opening ent client", err)
 	}
 
-	srv := handler.NewDefaultServer(graph.NewSchema(client))
+	b, err := bot.NewDiscordBot(client)
+	if err != nil {
+		log.Fatal("creating discord bot", err)
+	}
+
+	if err := b.Start(); err != nil {
+		log.Fatal("starting discord bot", err)
+	}
+	defer b.Stop()
+
+	srv := handler.NewDefaultServer(graph.NewSchema(client, b.Client))
 	srv.Use(entgql.Transactioner{TxOpener: client})
 
-	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
-	http.Handle("/query", srv)
+	http.Handle("/playground", playground.Handler("GraphQL playground", "/"))
+	http.Handle("/", middleware.EnsureValidToken()(srv))
 
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
