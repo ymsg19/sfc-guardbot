@@ -16,7 +16,6 @@ import (
 	"entgo.io/contrib/entgql"
 	"entgo.io/ent/dialect"
 	"github.com/99designs/gqlgen/graphql/handler"
-	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/joho/godotenv"
 
 	_ "github.com/lib/pq"
@@ -84,9 +83,8 @@ func main() {
 	srv := handler.NewDefaultServer(graph.NewSchema(client, b.Client))
 	srv.Use(entgql.Transactioner{TxOpener: client})
 
-	http.Handle("/playground", playground.Handler("GraphQL playground", "/"))
 	http.Handle("/", middleware.EnsureValidToken()(srv))
 
-	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
+	log.Print("API Listening on port " + port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }

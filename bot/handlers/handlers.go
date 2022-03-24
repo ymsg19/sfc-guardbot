@@ -23,7 +23,8 @@ func NewHandlers(db *ent.Client) *Handlers {
 }
 
 func (h Handlers) ResigsterAll(s *discordgo.Session) {
-	s.AddHandler(h.onMemberJoined)
+	// ToDo: Enable this when it is ready for production use.
+	// s.AddHandler(h.onMemberJoined)
 }
 
 func (h Handlers) onMemberJoined(s *discordgo.Session, e *discordgo.GuildMemberAdd) {
