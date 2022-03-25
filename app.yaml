@@ -1,0 +1,15 @@
+runtime: go116
+
+env_variables:
+  ENV: production
+  DATABASE_URL: $secrets.DATABASE
+  MAILGUN_PRIVATE_API_KEY: $secrets.MAILGUN_PRIVATE_API_KEY
+  AUTH0_DOMAIN: $secrets.AUTH0_DOMAIN
+  AUTH0_AUDIENCE: $secrets.AUTH0_AUDIENCE
+  DISCORD_BOT_TOKEN: $secrets.DISCORD_BOT_TOKEN
+
+automatic_scaling:
+  min_idle_instances: automatic
+  max_idle_instances: 1
+  min_pending_latency: 3000ms
+  max_pending_latency: automatic

@@ -1,0 +1,33 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Deploy
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: 'auth'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+      - name: 'replace app.yaml'
+        run: |
+          sed -i 's|$secrets.DATABASE|${{ secrets.DATABASE }}|g' app.yaml
+          sed -i 's|$secrets.MAILGUN_PRIVATE_API_KEY|${{ secrets.MAILGUN_PRIVATE_API_KEY }}|g' app.yaml
+          sed -i 's|$secrets.AUTH0_DOMAIN|${{ secrets.AUTH0_DOMAIN }}|g' app.yaml
+          sed -i 's|$secrets.AUTH0_AUDIENCE|${{ secrets.AUTH0_AUDIENCE }}|g' app.yaml
+          sed -i 's|$secrets.DISCORD_BOT_TOKEN|${{ secrets.DISCORD_BOT_TOKEN }}|g' app.yaml
+      - name: 'deploy'
+        uses: 'google-github-actions/deploy-appengine@v0'

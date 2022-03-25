@@ -58,7 +58,7 @@ func main() {
 		}
 	}()
 	if err != nil {
-		log.Fatal("opening ent client", err)
+		log.Fatalf("opening ent client: %v", err)
 	}
 
 	defer client.Close()
@@ -67,16 +67,16 @@ func main() {
 		context.Background(),
 		migrate.WithGlobalUniqueID(true),
 	); err != nil {
-		log.Fatal("opening ent client", err)
+		log.Fatalf("opening ent client: %v", err)
 	}
 
 	b, err := bot.NewDiscordBot(client)
 	if err != nil {
-		log.Fatal("creating discord bot", err)
+		log.Fatalf("creating discord bot: %v", err)
 	}
 
 	if err := b.Start(); err != nil {
-		log.Fatal("starting discord bot", err)
+		log.Fatalf("starting discord bot: %v", err)
 	}
 	defer b.Stop()
 
